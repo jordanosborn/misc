@@ -1,0 +1,9 @@
+N=\text{num 1 bet possibilities in American Roulette}\newline
+\text{Fractional Gain}\newline
+G(\{f_i\}) = \sum_{i=0}^{N}{P_i (O_i-1)f_i-(1-P_i)f_i}\newline
+Max(G(\{f_i\})):\sum_{i=0}^{N}{f_i}=1 \newline
+\text{American Roulette}\newline
+P_{win}=\frac{n_{covered}}{38}\newline
+p_0=0.01 \newline
+T_i=\frac{T}{\sum_{i=1}^{\lceil \frac{\ln{p_0}}{\ln{(1-P_{win})}}\rceil}(2^{i-1})}\newline
+B_i=T_if_i
