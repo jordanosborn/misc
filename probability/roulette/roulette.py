@@ -3,10 +3,10 @@ from matplotlib import pyplot as pplt
 from random import randint
 #p lose all rounds always less than p0
 p0=0.01
-p=18/38
+p=18/37
 
 N=log(p0)/log(1-p)
-T=100
+T=20
 S=0
 for i in range(1,ceil(N)+1): 
 	S+=2**(i-1)
