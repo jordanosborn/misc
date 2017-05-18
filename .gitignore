@@ -20,3 +20,5 @@ virtual_computer/Makefile
 *.xcworkspacedata
 
 *.xcuserstate
+
+MachineLearning/.idea/
