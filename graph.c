@@ -18,6 +18,14 @@ const char properties[info][l] = {
     "Cat","Bird","Dog","Fish","Horse"
 };
 
+const char categories[info + people][l] = {
+    "Person","Person", "Person", "Person","Person",
+    "Color","Color","Color","Color","Color",
+    "Drink","Drink","Drink","Drink","Drink",
+    "Cigar","Cigar","Cigar", "Cigar", "Cigar",
+    "Pet","Pet","Pet","Pet","Pet"
+};
+
 #define NO 0.0
 #define MAYBE 0.5
 #define YES 1.0
@@ -67,6 +75,7 @@ int find_edge(graph* a, const char start[l], const char end[l]) {
 
 void create_node(graph* a, const char value[l]) {
     strcpy(a -> nodes[a -> node_count].value, value);
+    strcpy(a -> nodes[a -> node_count].category, categories[a -> node_count]);
     a -> node_count++;
 }
 
@@ -94,13 +103,14 @@ graph* create_graph() {
 }
 
 void set_fact(graph* a, const char node[l], const char property[l], float value, bool self_exclusive, bool exclusive) {
+    int pos = find_node(a, property);
     for (int i = 0; i < a -> edge_count; i++) {
         if (strcmp(a -> edges[i].end->value, property) == 0) {
             if (strcmp(a -> edges[i].start->value, node) == 0) a -> edges[i].value = value;
-            //else if (exclusive) a -> edges[i].value = ((value == YES) ? NO: YES);
-
+            else if (exclusive) a -> edges[i].value = ((value == YES) ? NO: YES);
         }
-        //else if (self_exclusive && (strcmp(a -> edges[i].start->value, node) == 0)) ((value == YES) ? NO: YES);
+        else if (self_exclusive && strcmp(a -> edges[i].start->value, node) == 0 && strcmp(a -> edges[i].end->category, a -> nodes[pos].category) == 0)
+            a -> edges[i].value = ((value == YES) ? NO: YES);
     }
 
 }
@@ -118,9 +128,5 @@ int main() {
     graph* a = create_graph();
     set_fact(a, "Brit", "Horse", YES, true, true);
     print_graph(a);
-    for(int i =0; i < a -> edge_count; i ++ ) {
-        printf("%.1f ",a -> edges[i].value);
-    }
-
     return 0;
 }
