@@ -4,10 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <assert.h>
 
 #define l 11
 #define info 20
 #define people 5
+#define category_length 5
 
 const char actors[people][l] = {
     "Brit","Dane","German","Norweigen","Swede",
@@ -28,9 +30,9 @@ const char categories[info + people][l] = {
     "Pet","Pet","Pet","Pet","Pet"
 };
 
-#define NO 0.0
-#define MAYBE 0.5
-#define YES 1.0
+#define NO -1
+#define MAYBE 0
+#define YES 1
 
 typedef struct {
     char value[l];
@@ -40,7 +42,7 @@ typedef struct {
 typedef struct {
     node* start;
     node* end;
-    float value;
+    int value;
 } edge;
 
 typedef struct {
@@ -114,21 +116,67 @@ void set_fact(graph* a, const char node[l], const char property[l], float value,
         else if (self_exclusive && strcmp(a -> edges[i].start->value, node) == 0 && strcmp(a -> edges[i].end->category, a -> nodes[pos].category) == 0)
             a -> edges[i].value = ((value == YES) ? NO: YES);
     }
+}
 
+
+//needs work setting exclusive etc
+void set_condition(graph* a, const char first[l], const char second[l], bool equality) {
+    char p[people][l];
+    int val[people];
+    int counter = 0;
+    for (int i = 0; i < a -> edge_count; i++) {
+        if (strcmp(a -> edges[i].end -> value, first) == 0) {
+            if (a->edges[i].value == NO) {
+                strcpy(p[counter], a->edges[i].start -> value);
+                val[counter] = NO;
+            }
+            else if(a->edges[i].value == MAYBE) {
+                strcpy(p[counter], a->edges[i].start -> value);
+                val[counter] = MAYBE;
+            }
+            else if(a->edges[i].value == YES) {
+                strcpy(p[counter], a->edges[i].start -> value);
+                val[counter] = YES;
+            }
+            counter += 1;
+        }
+    }
+    for (int i = 0; i< people; i++) {
+        for (int j = 0; j < a -> edge_count; j++)
+            if (strcmp(p[i], a->edges[j].start->value) == 0 && strcmp(second, a->edges[j].end->value) == 0) {
+                printf("%s - %i\n - %i", p[i], val[i], a->edges[j].value);
+                if(a->edges[j].value != MAYBE) {
+                    if (a->edges[find_edge(a, p[i], first)].value != MAYBE) assert(a->edges[j].value == a->edges[find_edge(a, p[i], first)].value);
+                    else
+                        a->edges[find_edge(a, p[i], first)].value = a->edges[j].value;
+                }
+                else
+                    a->edges[j].value = (equality) ? val[i]: - val[i];
+            }
+    }
 }
 
 void print_graph(graph* a){
+    int v = 0;
     for (int i = 0; i< people;i++){
-        printf("%s\n", a->nodes[i].value);
+        printf("%s:\n", a->nodes[i].value);
         for (int j = 0; j < info; j++) {
-            printf("\t-> %s : %.1f\n", a->nodes[j + people].value, a -> edges[(i * info) + j].value);
+            if (j % category_length ==  0) printf("\t%s:\n",a->nodes[j + people].category);
+            v = a -> edges[(i * info) + j].value;
+            if (v == NO) continue;
+            printf("\t-> %s : %i\n", a->nodes[j + people].value, v);
         }
     }
 }
 
 int main() {
     graph* a = create_graph();
-    set_fact(a, "Brit", "Horse", YES, true, true);
+    set_fact(a, "Brit", "Red", YES, true, true);
+    set_fact(a, "Swede", "Dog", YES, true, true);
+    set_fact(a, "Dane", "Tea", YES, true, true);
+    set_fact(a, "German", "Prince", YES, true, true);
+    set_condition(a, "Green", "Coffee", true);
+    set_condition(a, "Pall Mall", "Bird", true);
     print_graph(a);
     return 0;
 }
