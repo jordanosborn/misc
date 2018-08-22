@@ -1,3 +1,5 @@
+//http://www.chessandpoker.com/einsteins-problem-solution.html
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
