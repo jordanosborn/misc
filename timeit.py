@@ -18,7 +18,7 @@ try:
 	maxTab = maxString(commands.split(';')) + 1
 	roundover = int(roundover)
 except ValueError:
-	print("Args incorrectly formatted try: timeit command(string) roundover(int)")
+	print("Args incorrectly formatted try: timeit \"command1;command2\":string roundover:int")
 else:
 	print("Command\tMean\tStdv".expandtabs(maxTab))
 	for i, command in enumerate(commands.split(';')):
