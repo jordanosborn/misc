@@ -35,5 +35,7 @@ if __name__ == "__main__":
 
     with Pool(10) as p:
         document = p.map(download, links)
-
+    print("\n\nDownloaded all files\n\n")
     pdfkit.from_string("\n".join(document), output)
+    
+    print("PDF created")
