@@ -49,7 +49,10 @@ if __name__ == "__main__":
     with Pool(10) as p:
         document = p.map(get_page, links)
 
+    print("\n\nDownloaded all files\n\n")
+
     pdfkit.from_string("\n".join(document), output)
+    print("PDF created")
 
 #run with
 # rustBook.py https://doc.rust-lang.org/rust-by-example index.html rustExample.pdf
