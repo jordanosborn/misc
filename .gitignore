@@ -16,6 +16,7 @@ virtual_computer/Makefile
 *.xcscheme
 
 *.plist
+*.json
 
 *.xcworkspacedata
 
@@ -25,3 +26,4 @@ MachineLearning/*
 OpenGL/*
 MachineLearning/Deep Learning A-Z/Volume 1 - Supervised Deep Learning/Part 1 - Artificial Neural Networks (ANN)/Section 4 - Building an ANN/Churn_Modelling.csv
 *.swp
+.mypy_cache/3.7/requests/packages/urllib3/util/retry.meta.json
