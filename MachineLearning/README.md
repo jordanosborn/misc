@@ -1,2 +1,3 @@
 #Machine Learning
-$\sqrt{60}$
+
+$$\sqrt{60}$$

@@ -21,4 +21,6 @@ virtual_computer/Makefile
 
 *.xcuserstate
 
-MachineLearning/.idea/
+MachineLearning/*
+OpenGL/*
+MachineLearning/Deep Learning A-Z/Volume 1 - Supervised Deep Learning/Part 1 - Artificial Neural Networks (ANN)/Section 4 - Building an ANN/Churn_Modelling.csv
