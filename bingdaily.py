@@ -69,9 +69,10 @@ if __name__ == "__main__":
             print("bingdaily is not installed.")
     elif "update" in sys.argv:
         r = requests.get("https://raw.githubusercontent.com/jordanosborn/misc/master/bingdaily.py").text
+        print(r)
         with open(installLocation, "r") as f:
-            prevVersion = f.readlines()[1].replace("#", "")
-        nextVersion =  r.split("\n")[1].replace("#", "")
+            prevVersion = f.readlines()[1].replace("#", "").strip()
+        nextVersion =  r.split("\n")[1].replace("#", "").strip()
         if nextVersion != prevVersion:
             with open(installLocation, "w") as f:
                 f.write(r)
