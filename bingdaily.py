@@ -6,7 +6,7 @@ For OSX only run python3 bingdaily.py install to install
 
 SCRIPT = """/usr/bin/osascript<<END
 tell application "Finder"
-set desktop picture to POSIX file "%s"s
+set desktop picture to POSIX file "%s"
 end tell
 END"""
 
@@ -102,7 +102,7 @@ if __name__ == "__main__":
                 subprocess.Popen(SCRIPT%(wallpaper), shell=True)
                 print('Wallpaper set to ' + wallpaper.split("/")[-1])
         run()
-        schedule.every(24).hours.do(run)
+        schedule.every(8).hours.do(run)
         while True:
             schedule.run_pending()
             sleep(60*60)
