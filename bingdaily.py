@@ -70,6 +70,7 @@ if __name__ == "__main__":
         #curl new script and install
         pass
     elif sys.argv[0] == installLocation:
+        #disallow self running only launchctl may run
         def run():
             try:
                 images = json.loads(requests.get(apiURL+ '1').text)["images"]
@@ -85,11 +86,10 @@ if __name__ == "__main__":
                 subprocess.Popen(SCRIPT%(wallpaper), shell=True)
                 print('Wallpaper set to ' + wallpaper.split("/")[-1])
         run()
-        schedule.every(24).hour.do(run)
+        schedule.every(24).hours.do(run)
         while True:
             schedule.run_pending()
             sleep(60*60)
     else:
         print("Please install bingdaily by running (python3 bingdaily.py install)")
         
-
