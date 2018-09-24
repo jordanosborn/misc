@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3
-#1.0.4
+#1.0.6
 """
 For OSX only run python3 bingdaily.py install to install
 """
@@ -68,20 +68,23 @@ if __name__ == "__main__":
         else:
             print("bingdaily is not installed.")
     elif "update" in sys.argv:
-        r = requests.get("https://raw.githubusercontent.com/jordanosborn/misc/master/bingdaily.py").text
-        with open(installLocation, "r") as f:
-            prevVersion = f.readlines()[1].replace("#", "").strip()
-        nextVersion =  r.split("\n")[1].replace("#", "").strip()
-        if nextVersion != prevVersion:
-            print(r)
-            if input("Would you like to continue with the update (y/n)").strip() == "y":
-                with open(installLocation, "w") as f:
-                    f.write(r)
-                print("Updated bingdaily from " + prevVersion +  " to version " + nextVersion)
+        if os.path.exists(installLocation):
+            r = requests.get("https://raw.githubusercontent.com/jordanosborn/misc/master/bingdaily.py").text
+            with open(installLocation, "r") as f:
+                prevVersion = f.readlines()[1].replace("#", "").strip()
+            nextVersion =  r.split("\n")[1].replace("#", "").strip()
+            if nextVersion != prevVersion:
+                print(r)
+                if input("Would you like to continue with the update (y/n)").strip() == "y":
+                    with open(installLocation, "w") as f:
+                        f.write(r)
+                    print("Updated bingdaily from " + prevVersion +  " to version " + nextVersion)
+                else:
+                    print("bingdaily update cancelled.")
             else:
-                print("bingdaily update cancelled.")
+                print("bingdaily already at latest version " + prevVersion)
         else:
-            print("bingdaily already at latest version " + prevVersion)
+            print("bingdaily is not installed install with (python3 bingdaily.py install")
     elif sys.argv[0] == installLocation:
         #disallow self running only launchctl may run
         def run():
