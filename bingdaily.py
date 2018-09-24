@@ -1,3 +1,4 @@
+#1.0.0
 #!/usr/local/bin/python3
 """
 For OSX only run python3 bingdaily.py install to install
