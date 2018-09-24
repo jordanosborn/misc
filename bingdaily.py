@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3
-#1.0.1
+#1.0.2
 """
 For OSX only run python3 bingdaily.py install to install
 """
@@ -70,10 +70,10 @@ if __name__ == "__main__":
     elif "update" in sys.argv:
         r = requests.get("https://raw.githubusercontent.com/jordanosborn/misc/master/bingdaily.py").text
         with open(installLocation, "r") as f:
-            prevVersion = f.readlines()[1]
+            prevVersion = f.readlines()[1].replace("#", "")
         with open(installLocation, "w") as f:
             f.write(r)
-        print("Updated bingdaily from " + prevVersion +  " to version " + r.split("\n")[1])
+        print("Updated bingdaily from " + prevVersion +  " to version " + r.split("\n")[1].replace("#", ""))
     elif sys.argv[0] == installLocation:
         #disallow self running only launchctl may run
         def run():
