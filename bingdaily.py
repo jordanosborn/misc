@@ -75,7 +75,7 @@ if __name__ == "__main__":
         if nextVersion != prevVersion:
             with open(installLocation, "w") as f:
                 f.write(r)
-            print("Updated bingdaily from " + prevVersion +  " to version " + nextVersion))
+            print("Updated bingdaily from " + prevVersion +  " to version " + nextVersion)
         else:
             print("bingdaily already at latest version " + prevVersion)
     elif sys.argv[0] == installLocation:
