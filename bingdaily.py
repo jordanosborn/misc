@@ -71,9 +71,13 @@ if __name__ == "__main__":
         r = requests.get("https://raw.githubusercontent.com/jordanosborn/misc/master/bingdaily.py").text
         with open(installLocation, "r") as f:
             prevVersion = f.readlines()[1].replace("#", "")
-        with open(installLocation, "w") as f:
-            f.write(r)
-        print("Updated bingdaily from " + prevVersion +  " to version " + r.split("\n")[1].replace("#", ""))
+        nextVersion =  r.split("\n")[1].replace("#", "")
+        if nextVersion != prevVersion:
+            with open(installLocation, "w") as f:
+                f.write(r)
+            print("Updated bingdaily from " + prevVersion +  " to version " + nextVersion))
+        else:
+            print("bingdaily already at latest version " + prevVersion)
     elif sys.argv[0] == installLocation:
         #disallow self running only launchctl may run
         def run():
