@@ -67,8 +67,10 @@ if __name__ == "__main__":
         else:
             print("bingdaily is not installed.")
     elif "update" in sys.argv:
-        #curl new script and install
-        pass
+        r = requests.get("https://raw.githubusercontent.com/jordanosborn/misc/master/bingdaily.py").text
+        with open(installLocation, "w") as f:
+            f.write(r)
+        print("Updated bingdaily to latest version.")
     elif sys.argv[0] == installLocation:
         #disallow self running only launchctl may run
         def run():
