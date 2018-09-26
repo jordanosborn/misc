@@ -14,6 +14,8 @@ from pathlib import Path
 from time import sleep
 import sys, json, os, requests, subprocess, schedule
 from multiprocessing import Pool
+from typing import Tuple
+
 HOME = str(Path.home())
 apiURL = 'http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n='
 baseURL = "http://www.bing.com/"
@@ -34,7 +36,13 @@ launchPlist = r"""<?xml version="1.0" encoding="UTF-8"?>
 </plist>"""
 plistLocation = HOME + "/Library/LaunchAgents/com.user.bingdaily.plist"
 
-def downloadImage(data: (str, str)) -> None:
+def downloadImage(data: Tuple[str, str]) -> None:
+    """Download image from url and save to name.
+
+    Arguments:
+        data {Tuple[str, str]} -- (url, name)
+
+    """
     name = data[1]
     r = requests.get(data[0], stream=True)
     if r.status_code == 200 and not os.path.exists(name):
@@ -51,7 +59,7 @@ if __name__ == "__main__":
             subprocess.call(["cp", scriptLocation, installLocation])
             os.makedirs(os.path.dirname(plistLocation), exist_ok=True)
             with open(plistLocation, "w") as f:
-                f.write(launchPlist) 
+                f.write(launchPlist)
             subprocess.call(["launchctl", "load",  plistLocation])
             if scriptLocation != installLocation:
                 #subprocess.call(["rm", scriptLocation])
@@ -88,6 +96,7 @@ if __name__ == "__main__":
     elif sys.argv[0] == installLocation:
         #disallow self running only launchctl may run
         def run():
+            """Run loop schedule."""
             try:
                 images = json.loads(requests.get(apiURL+ '1').text)["images"]
             except KeyError:
@@ -108,4 +117,3 @@ if __name__ == "__main__":
             sleep(60*60)
     else:
         print("Please install bingdaily by running (python3 bingdaily.py install)")
-        
