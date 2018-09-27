@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3
-#1.0.8
+#1.0.9
 """
 For OSX only run python3 bingdaily.py install to install
 """
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         prevVersion = ""
         with open(installLocation, "r") as f:
             prevVersion = f.readlines()[1].replace("#", "").strip()
-        print("Installed bingdaily version: ", prevVersion)
+        print("Installed bingdaily version:", prevVersion)
     elif "install" in sys.argv:
         if sys.argv[0] != installLocation:
             scriptLocation = sys.argv[0]
