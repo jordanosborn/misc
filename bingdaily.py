@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3
-#1.0.6
+#1.0.7
 """
 For OSX only run python3 bingdaily.py install to install
 """
@@ -44,12 +44,14 @@ def downloadImage(data: Tuple[str, str]) -> None:
 
     """
     name = data[1]
-    r = requests.get(data[0], stream=True)
-    if r.status_code == 200 and not os.path.exists(name):
-        with open(name, 'wb') as f:
-            for chunk in r:
-                f.write(chunk)
-        print("Downloaded photo " + name)
+
+    if not os.path.exists(name):
+        r = requests.get(data[0], stream=True)
+        if r.status_code == 200:
+            with open(name, 'wb') as f:
+                for chunk in r:
+                    f.write(chunk)
+            print("Downloaded photo " + name)
 
 if __name__ == "__main__":
     if "install" in sys.argv:
@@ -111,7 +113,7 @@ if __name__ == "__main__":
                 subprocess.Popen(SCRIPT%(wallpaper), shell=True)
                 print('Wallpaper set to ' + wallpaper.split("/")[-1])
         run()
-        schedule.every(8).hours.do(run)
+        schedule.every(12).hours.do(run)
         while True:
             schedule.run_pending()
             sleep(60*60)
