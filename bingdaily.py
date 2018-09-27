@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3
-#1.0.7
+#1.0.8
 """
 For OSX only run python3 bingdaily.py install to install
 """
@@ -54,7 +54,12 @@ def downloadImage(data: Tuple[str, str]) -> None:
             print("Downloaded photo " + name)
 
 if __name__ == "__main__":
-    if "install" in sys.argv:
+    if "version" in sys.argv:
+        prevVersion = ""
+        with open(installLocation, "r") as f:
+            prevVersion = f.readlines()[1].replace("#", "").strip()
+        print("Installed bingdaily version: ", prevVersion)
+    elif "install" in sys.argv:
         if sys.argv[0] != installLocation:
             scriptLocation = sys.argv[0]
             subprocess.call(["chmod", "+x", scriptLocation])
