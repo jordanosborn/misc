@@ -3,7 +3,7 @@ from typing import Set, Tuple
 from random import randint
 
 
-def conway(state: Set[Tuple[int, int]], max_x: int = 10, max_y: int = 10) -> Set[Tuple[int, int]]:
+def conway(state: Set[Tuple[int, int]], max_x: int = 100, max_y: int = 100) -> Set[Tuple[int, int]]:
     positions = list(itertools.product(range(max_x), range(max_y)))
     yield state
     while len(state) != 0:
