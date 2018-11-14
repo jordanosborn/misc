@@ -20,7 +20,7 @@ def conway(state: Set[Tuple[int, int]], max_x: int = 100, max_y: int = 100) -> S
         yield state
 
 
-def main(initial_state: Set[Tuple[int, int]], width: int = 500, height: int = 500, max_x: int =100, max_y: int = 100):
+def main(initial_state: Set[Tuple[int, int]], width: int = 500, height: int = 500, max_x: int = 100, max_y: int = 100):
     pygame.init()
     screen = pygame.display.set_mode((width, height))
     size_x, size_y = width // max_x, height // max_y
