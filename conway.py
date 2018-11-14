@@ -45,5 +45,5 @@ def main(initial_state: Set[Tuple[int, int]], width=500, height=500, max_x=100, 
 
 if __name__ == "__main__":
     width, height, max_x, max_y = 1000, 1000, 500, 500
-    s = {x, y for x, y in itertools.product(range(max_x), range(max_y)) if randint(0, 1)}
+    s = {(x, y) for x, y in itertools.product(range(max_x), range(max_y)) if randint(0, 1)}
     main(s, width, height, max_x, max_y)
