@@ -16,7 +16,7 @@ def conway(state: Set[Tuple[int, int]], max_x: int = 10, max_y: int = 10) -> Set
                 (x - 1, y - 1), (x, y - 1), (x + 1, y - 1),
                 (x - 1, y),                 (x + 1, y),
                 (x - 1, y + 1), (x, y + 1), (x + 1, y + 1)], 0)
-            if alive and neighbours in [2, 3] or not alive and neighbours == 3: state.add((x,y))
+            if alive and neighbours in [2, 3] or not alive and neighbours == 3: state.add((x, y))
         yield state
 
 
