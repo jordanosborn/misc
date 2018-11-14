@@ -2,40 +2,33 @@ import pygame
 from pygame.locals import *
 from typing import Set, Tuple
 from itertools import product
+from functools import reduce
 from time import sleep
 
 
 def conway(state: Set[Tuple[int, int]], max_x: int = 10, max_y: int = 10) -> Set[Tuple[int, int]]:
     yield state
     while len(state) != 0:
-        #refactor this
+        #refactor this into array index scheme or nparray
         for x, y in product(range(max_x), range(max_y)):
             alive = False
             if (x, y) in state:
                 state.remove((x,y))
                 alive = True
-            neighbours = 0
             xs, ys = x - 1, y -1
-            if (xs, ys) in state:
-                neighbours += 1
-            if (xs, ys + 1) in state:
-                neighbours += 1
-            if (xs, ys + 2) in state:
-                neighbours += 1
-            if (xs + 1, ys) in  state:
-                neighbours += 1
-            if (xs + 1, ys + 2) in state:
-                neighbours += 1
-            if (xs + 2, ys) in state:
-                neighbours += 1
-            if (xs + 2, ys + 1) in state:
-                neighbours += 1
-            if (xs + 2, ys + 2) in state:
-                neighbours += 1
-            if alive and neighbours in [2, 3]:
+            neighbours = reduce(lambda acc, x: acc + (1 if x in state else 0), [
+                (xs, ys),
+                (xs, ys + 1),
+                (xs, ys + 2),
+                (xs + 1, ys),
+                (xs + 1, ys + 2),
+                (xs + 2, ys),
+                (xs + 2, ys + 1),
+                (xs + 2, ys + 2)
+            ], 0)
+            # rules
+            if alive and neighbours in [2, 3] or not alive and neighbours == 3:
                 state.add((x,y))
-            elif not alive and neighbours == 3:
-                state.add((x, y))
         yield state
     return None
 
@@ -61,11 +54,10 @@ def main(initial_state: Set[Tuple[int, int]], width=500, height=500, max_x=100, 
 
     def game():
         for i, s in enumerate(conway(initial_state, max_x, max_y)):
-            if i % 10 == 0:
-                screen.fill((255, 255, 255))
-                for x, y in s:
-                    pygame.draw.rect(screen, (0, 0, 0), [x * size_x, y * size_y, size_x, size_y])
-                pygame.display.flip()
+            screen.fill((255, 255, 255))
+            for x, y in s:
+                pygame.draw.rect(screen, (0, 0, 0), [x * size_x, y * size_y, size_x, size_y])
+            pygame.display.flip()
 
     t1 = pygame.threads.Thread(target=inp, daemon=True)
     t2 = pygame.threads.Thread(target=game, daemon=True)
